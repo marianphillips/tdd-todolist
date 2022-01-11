@@ -10,11 +10,12 @@ describe("TodoList", () => {
   
   it("creates a todo item", () => {
     // set up
+
     const expected = [{
       id: 1,
       text: "turn the heating on!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }]
     // execute
     const result = todoList.create("turn the heating on!")
@@ -28,12 +29,12 @@ describe("TodoList", () => {
       id: 1,
       text: "turn the heating on!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }, {
       id: 2,
       text: "wash the sheets!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }]
     // execute
     todoList.create("turn the heating on!")
@@ -49,12 +50,12 @@ describe("TodoList", () => {
       id: 1,
       text: "turn the heating on!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }, {
       id: 2,
       text: "wash the sheets!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }]
     // execute
     todoList.create("turn the heating on!")
@@ -69,12 +70,12 @@ describe("TodoList", () => {
       id: 1,
       text: "turn the heating on!",
       status: "complete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }, {
       id: 2,
       text: "wash the sheets!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }]
     // execute
     todoList.create("turn the heating on!")
@@ -90,7 +91,7 @@ describe("TodoList", () => {
       id: 1,
       text: "turn the heating on!",
       status: "complete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     },
 ]
     // execute
@@ -108,13 +109,13 @@ describe("TodoList", () => {
       id: 2,
       text: "wash the sheets!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     },
     {
       id: 3,
       text: "make dinner!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     },
 ]
     // execute
@@ -132,7 +133,7 @@ describe("TodoList", () => {
       id: 3,
       text: "make dinner!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }
 
     // execute
@@ -163,13 +164,13 @@ describe("TodoList", () => {
       id: 1,
       text: "turn the heating on!",
       status: "complete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     },
     {
       id: 2,
       text: "wash the sheets!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     },
 ]
 
@@ -190,19 +191,19 @@ describe("TodoList", () => {
       id: 1,
       text: "turn the heating on!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }, {
       id: 2,
       text: "wash the sheets!",
       status: "incomplete",
-      day: "Tue"
+      day: Date().toString().substring(0,3)
     }]
 
     // execute
     todoList.create("turn the heating on!")
     todoList.create("wash the sheets!")
     // verify
-    expect(todoList.searchByDay("Tue")).toEqual(expected)
+    expect(todoList.searchByDay(Date().toString().substring(0,3))).toEqual(expected)
   })
 
   it("search by day and no day found", () => {
@@ -213,7 +214,11 @@ describe("TodoList", () => {
     todoList.create("turn the heating on!")
     todoList.create("wash the sheets!")
     // verify
-    expect(todoList.searchByDay("Mon")).toEqual(expected)
+
+    if(Date().toString().substring(0,3) === "Mon") {
+      expect(todoList.searchByDay("Tue")).toEqual(expected)
+    }
+    else {expect(todoList.searchByDay("Mon")).toEqual(expected)}
   })
 
 
