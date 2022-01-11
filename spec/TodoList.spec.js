@@ -13,7 +13,8 @@ describe("TodoList", () => {
     const expected = [{
       id: 1,
       text: "turn the heating on!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     }]
     // execute
     const result = todoList.create("turn the heating on!")
@@ -26,11 +27,13 @@ describe("TodoList", () => {
     const expected = [{
       id: 1,
       text: "turn the heating on!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     }, {
       id: 2,
       text: "wash the sheets!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     }]
     // execute
     todoList.create("turn the heating on!")
@@ -45,11 +48,13 @@ describe("TodoList", () => {
     const expected = [{
       id: 1,
       text: "turn the heating on!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     }, {
       id: 2,
       text: "wash the sheets!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     }]
     // execute
     todoList.create("turn the heating on!")
@@ -63,11 +68,13 @@ describe("TodoList", () => {
     const expected = [{
       id: 1,
       text: "turn the heating on!",
-      status: "complete"
+      status: "complete",
+      day: "Tue"
     }, {
       id: 2,
       text: "wash the sheets!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     }]
     // execute
     todoList.create("turn the heating on!")
@@ -82,7 +89,8 @@ describe("TodoList", () => {
     const expected = [ {
       id: 1,
       text: "turn the heating on!",
-      status: "complete"
+      status: "complete",
+      day: "Tue"
     },
 ]
     // execute
@@ -99,12 +107,14 @@ describe("TodoList", () => {
     const expected = [ {
       id: 2,
       text: "wash the sheets!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     },
     {
       id: 3,
       text: "make dinner!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     },
 ]
     // execute
@@ -121,7 +131,8 @@ describe("TodoList", () => {
     const expected =  {
       id: 3,
       text: "make dinner!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     }
 
     // execute
@@ -151,12 +162,14 @@ describe("TodoList", () => {
     const expected = [ {
       id: 1,
       text: "turn the heating on!",
-      status: "complete"
+      status: "complete",
+      day: "Tue"
     },
     {
       id: 2,
       text: "wash the sheets!",
-      status: "incomplete"
+      status: "incomplete",
+      day: "Tue"
     },
 ]
 
@@ -169,6 +182,38 @@ describe("TodoList", () => {
 
     // verify
     expect(todoList.list).toEqual(expected)
+  })
+
+  it("search by day and return a list", () => {
+    // set up
+    const expected = [{
+      id: 1,
+      text: "turn the heating on!",
+      status: "incomplete",
+      day: "Tue"
+    }, {
+      id: 2,
+      text: "wash the sheets!",
+      status: "incomplete",
+      day: "Tue"
+    }]
+
+    // execute
+    todoList.create("turn the heating on!")
+    todoList.create("wash the sheets!")
+    // verify
+    expect(todoList.searchByDay("Tue")).toEqual(expected)
+  })
+
+  it("search by day and no day found", () => {
+    // set up
+    const expected = []
+
+    // execute
+    todoList.create("turn the heating on!")
+    todoList.create("wash the sheets!")
+    // verify
+    expect(todoList.searchByDay("Mon")).toEqual(expected)
   })
 
 

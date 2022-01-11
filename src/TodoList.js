@@ -6,7 +6,7 @@ class TodoList {
  }
 
  create(listItem) {
-    let listObject = {id:this.counter, text: listItem, status: "incomplete"}
+    let listObject = {id:this.counter, text: listItem, status: "incomplete", day: Date().toString().substring(0,3)}
      this.list.push(listObject)
      this.counter++
  }
@@ -60,6 +60,18 @@ removeByID(listID) {
         }
     }
 }
+
+searchByDay(days) {
+    let dayArray = []
+    for(let i = 0; i<this.list.length; i++) {
+        if(this.list[i].day === days) {
+           dayArray.push(this.list[i])
+        }
+    }
+
+    return dayArray
+}
+
 
 
 }
