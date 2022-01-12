@@ -1,3 +1,5 @@
+const STATUS_IMCOMPLETE = "incomplete"
+const STATUS_COMPLETE = "complete"
 
 class TodoList {
  constructor() {
@@ -6,7 +8,12 @@ class TodoList {
  }
 
  create(listItem) {
-    let listObject = {id:this.counter, text: listItem, status: "incomplete", day: Date().substring(0,15)}
+    let listObject = {
+        id:this.counter, 
+        text: listItem, 
+        status: STATUS_IMCOMPLETE, 
+        day: Date().substring(0,15)
+    }
      this.list.push(listObject)
      this.counter++
  }
@@ -16,31 +23,29 @@ class TodoList {
  }
 
 setComplete(listID) {
-for(let i = 0; i < this.list.length; i++) {
-    if(this.list[i].id === listID) {
-        this.list[i].status = "complete"
-    }
+    if(typeof(this.searchByID(listID)) === "object") {
+    this.searchByID(listID).status = STATUS_COMPLETE
 }
 }
 
+
 getIncomplete() {
-    let incomplete = []
-    for(let i = 0; i < this.list.length; i++) {
-        if(this.list[i].status === "incomplete") {
-            incomplete.push(this.list[i])
-        }
-    }
-    return incomplete
+    return this.getByStatus(STATUS_IMCOMPLETE)
 }
 
 getComplete() {
-    let complete = []
+    return this.getByStatus(STATUS_COMPLETE)
+}
+
+
+getByStatus(status) {
+    let arrayByStatus = []
     for(let i = 0; i < this.list.length; i++) {
-        if(this.list[i].status === "complete") {
-            complete.push(this.list[i])
+        if(this.list[i].status === status) {
+            arrayByStatus.push(this.list[i])
         }
     }
-    return complete
+    return arrayByStatus
 }
 
 
@@ -87,7 +92,7 @@ rl.question('Add an item to your todo list: \n', (answer) => {
   todo.create(answer)
   console.log(`Here is your current todo list: %j`, todo.list);
 
-  rl.setPrompt('To Add, delete or find an item; type a, d or f: To set an list item to Complete; type c: Or to exit type "close":')
+  rl.setPrompt('To Add, delete or find an item; type a, d or f: To set an list item to complete; type c: Or to exit type "close":')
   rl.prompt();
 
   rl.on('line', (answer) => {
@@ -122,7 +127,7 @@ rl.question('Add an item to your todo list: \n', (answer) => {
 }
 
     else {
-    rl.setPrompt('Incorrect Input - To Add, delete or find an item; type a, d or f: Or to exit type "close":')
+    rl.setPrompt('Incorrect Input - To Add, delete or find an item; type a, d or f: To set an list item to Complete; type c: Or to exit type "close":')
     rl.prompt();
       }
   })
