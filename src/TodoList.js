@@ -50,7 +50,7 @@ searchByID(listID) {
          return this.list[i]
      }
  }
- return "NOOOOOOOOOO"
+ return "Not a correct List Item"
 }
 
 removeByID(listID) {
@@ -86,24 +86,43 @@ rl.question('Add an item to your todo list: \n', (answer) => {
   let todo = new TodoList()
   todo.create(answer)
   console.log(`Here is your current todo list: %j`, todo.list);
-  rl.setPrompt('To Add, delete or find an item; type a, d or f: Or to exit type "close":')
+
+  rl.setPrompt('To Add, delete or find an item; type a, d or f: To set an list item to Complete; type c: Or to exit type "close":')
   rl.prompt();
+
   rl.on('line', (answer) => {
       if(answer.trim() === "close") {
           rl.close()
       }
-      if(answer.trim() === "a") {
-        rl.setPrompt('Add another item to your list:\n')
-         rl.prompt()
-         rl.on('line', (answer) => {
-             todo.create(answer)
-             console.log(`Here is your current todo list: %j`, todo.list);
+      else if(answer.trim() === "a") {
+        rl.question('Add another item to your list:\n',(item) => {
+        todo.create(item)
+        console.log(`Here is your current todo list: %j`, todo.list);
+        })
+}
+
+    else if(answer.trim() === "d") {
+    rl.question('Type ID of list item you want to remove:\n',(ID) => {
+    todo.removeByID(Number(ID))
+    console.log(`Here is your current todo list: %j`, todo.list);
     })
 }
 
+    else if(answer.trim() === "c") {
+    rl.question('Type ID of list item you want to set to complete:\n',(number) => {
+    todo.setComplete(Number(number))
+    console.log(`Here is your current todo list: %j`, todo.list);
+    })
+}
 
-      else {
-    rl.setPrompt('To Add, delete or find an item; type a, d or f: Or to exit type "close":')
+    else if(answer.trim() === "f") {
+    rl.question('Type ID of list item you want to find:\n',(something) => {
+    console.log(JSON.stringify(todo.searchByID(Number(something))))
+    })
+}
+
+    else {
+    rl.setPrompt('Incorrect Input - To Add, delete or find an item; type a, d or f: Or to exit type "close":')
     rl.prompt();
       }
   })

@@ -147,7 +147,7 @@ describe("TodoList", () => {
 
   it("search by ID and return, ID does not exit", () => {
     // set up
-    const expected = "NOOOOOOOOOO"
+    const expected = "Not a correct List Item"
 
     // execute
     todoList.create("turn the heating on!")
