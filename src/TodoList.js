@@ -85,35 +85,35 @@ const rl = readline.createInterface({ input, output });
 rl.question('Add an item to your todo list: \n', (answer) => {
   let todo = new TodoList()
   todo.create(answer)
-  console.log(`Here is your current todo list: ${todo.list}`);
+  console.log(`Here is your current todo list: %j`, todo.list);
+  rl.setPrompt('To Add, delete or find an item; type a, d or f: Or to exit type "close":')
+  rl.prompt();
+  rl.on('line', (answer) => {
+      if(answer.trim() === "close") {
+          rl.close()
+      }
+      if(answer.trim() === "a") {
+        rl.setPrompt('Add another item to your list:\n')
+         rl.prompt()
+         rl.on('line', (answer) => {
+             todo.create(answer)
+             console.log(`Here is your current todo list: %j`, todo.list);
+    })
+}
+
+
+      else {
+    rl.setPrompt('To Add, delete or find an item; type a, d or f: Or to exit type "close":')
+    rl.prompt();
+      }
+  })
   
-  rl.question('To Add, delete or find an item; type a, d or f: Or to exit type "close": ', (answerNew) => {
-    if(answerNew.trim() == "a") {
-        console.log("Add")
-        rl.question('Add another item to your todo list: ', (item) => {
-            todo.create(item)
-            console.log(`Here is your current todo list: ${todo.list}`);
-    })} 
-
-    if(answernew.trim() === "d") {
-        rl.question('Which item would you like to delete? Type the ID number: ', (ID) => {
-            todo.removeByID(ID)
-            console.log(`Here is your current todo list: ${todo.list}`);
-    })} 
-
-    if(answer.trim() == "close") {
-            rl.close();   
-        }
-        
-        else {
-        rl.setPrompt("Incorrect input - To Add, delete or find an item; type a, d or f: Or to exit type 'close':\n")
-        rl.prompt()
-    }
-
-  }) })
+  }) 
 
   rl.on('close',()=> {
       console.log('Your to do list is finished')
   })
 
 module.exports = TodoList
+
+
